@@ -104,15 +104,18 @@ def arata_ecran_principal(tara, regiune, categorie, keyword):
 def arata_ecran_articol():
     link = st.session_state.vizualizare_articol
     
-    # Butonul de Întoarcere cerut
+    # Butonul de Întoarcere
     if st.button("⬅️ Înapoi la Știri"):
         st.session_state.vizualizare_articol = None
         st.rerun()
         
-    st.caption(f"Încărcare de pe: {link}")
+    st.caption(f"Sursă: {link}")
     
-    # Deschidem site-ul publicației direct în Streamlit folosind un Iframe
-    components.iframe(link, height=700, scrolling=True)
-
-if __name__ == "__main__":
-    main()
+    # Folosim HTML pur pentru a forța Iframe-ul să ocupe 85% din înălțimea ecranului (85vh)
+    iframe_html = f"""
+    <iframe src="{link}" 
+            style="width: 100%; height: 85vh; border: none; border-radius: 10px;" 
+            sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
+    </iframe>
+    """
+    st.markdown(iframe_html, unsafe_allow_html=True)
