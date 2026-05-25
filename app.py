@@ -2,6 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import ui_sidebar
 import data_news
+import ui_widgets
 
 # 1. Configurare pagină (trebuie să fie prima comandă Streamlit)
 st.set_page_config(page_title="Știri Mobile", page_icon="📱", layout="centered")
@@ -67,8 +68,12 @@ def main():
         arata_ecran_articol()
 
 def arata_ecran_principal(tara, regiune, categorie, keyword):
-    # Aici vom insera widget-urile pentru Vreme și Curs Valutar în următorul pas
-    st.info("🌤️ Widget-urile (Vreme, Curs Valutar) vor apărea aici sus.")
+    
+    # 1. Afișăm widgeturile simetrice sus
+    ui_widgets.afiseaza_widgeturi()
+    
+    # Linia de demarcație vizuală
+    st.markdown('<div class="separator"></div>', unsafe_allow_html=True)
     
     st.markdown("## 📰 Știri")
     
