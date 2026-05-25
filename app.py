@@ -155,5 +155,6 @@ def arata_ecran_articol(marime_font):
     else:
         st.error("Nu am putut extrage textul automat din cauza securității site-ului sursă.")
         st.markdown(f"[**Deschide articolul în browser aici**]({link})")
+        
 if __name__ == "__main__":
     main()
