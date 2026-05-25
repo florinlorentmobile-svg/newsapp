@@ -1,35 +1,35 @@
 import requests
 
 def get_vreme(lat=44.4323, lon=26.1063):
-    """
-    Preluăm vremea de la Open-Meteo. 
-    Implicit, coordonatele sunt pentru București.
-    În Streamlit este dificil să preiei GPS-ul exact al telefonului din motive de securitate a browserului, 
-    așa că folosim un oraș fix pentru acest prototip.
-    """
     try:
+        # Adăugăm un User-Agent pentru a preveni blocarea cererii de către server
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
         url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
-        response = requests.get(url, timeout=3).json()
-        temp = response['current_weather']['temperature']
+        
+        # Am crescut timeout-ul la 5 secunde
+        response = requests.get(url, headers=headers, timeout=5)
+        response.raise_for_status() # Forțăm ridicarea unei erori dacă HTTP-ul pică
+        
+        data = response.json()
+        temp = data['current_weather']['temperature']
         return f"{temp} °C"
-    except:
+    except Exception as e:
+        # Dacă pică, eroare va apărea în terminalul editorului tău pentru a o putea repara
+        print(f"Eroare preluare meteo: {e}")
         return "-- °C"
 
 def get_curs_valutar():
-    """
-    Preluăm cursul valutar RON/EUR și RON/USD folosind un API gratuit.
-    """
     try:
-        # Curs EUR
         url_eur = "https://open.er-api.com/v6/latest/EUR"
-        resp_eur = requests.get(url_eur, timeout=3).json()
+        resp_eur = requests.get(url_eur, timeout=5).json()
         eur_ron = resp_eur['rates']['RON']
         
-        # Curs USD
         url_usd = "https://open.er-api.com/v6/latest/USD"
-        resp_usd = requests.get(url_usd, timeout=3).json()
+        resp_usd = requests.get(url_usd, timeout=5).json()
         usd_ron = resp_usd['rates']['RON']
         
-        return f"{eur_ron:.2f} Lei", f"{usd_ron:.2f} Lei"
-    except:
-        return "-- Lei", "-- Lei"
+        # Eliminăm cuvântul "Lei" pentru că face textul prea lung în casetă. Păstrăm doar numărul.
+        return f"{eur_ron:.2f}", f"{usd_ron:.2f}"
+    except Exception as e:
+        print(f"Eroare preluare valută: {e}")
+        return "--", "--"
