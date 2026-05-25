@@ -105,3 +105,27 @@ def preia_stiri(tara, regiune, categorie, keyword=""):
                 })
                 
     return stiri_gasite
+
+from newspaper import Article
+
+def extrage_text_articol(url):
+    """
+    Descarcă pagina web și extrage doar textul util și imaginea principală,
+    fără reclame, cookie-uri sau meniuri.
+    """
+    try:
+        # Inițializăm articolul
+        articol = Article(url)
+        # Descărcăm conținutul
+        articol.download()
+        # Îl parsăm (extragem informațiile structurate)
+        articol.parse()
+        
+        return {
+            "titlu": articol.title,
+            "imagine": articol.top_image,
+            "text": articol.text
+        }
+    except Exception as e:
+        print(f"Eroare la extragerea articolului: {e}")
+        return None
