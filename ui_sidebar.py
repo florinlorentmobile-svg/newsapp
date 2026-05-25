@@ -4,10 +4,10 @@ def genereaza_sidebar():
     st.sidebar.header("⚙️ Setări și Filtre")
     
     # 1. Limba
-    limba = st.sidebar.selectbox("Limbă", ["RO", "EN", "DE"])
+    limba = st.sidebar.selectbox("Limbă", ["RO"])
     
     # 2. Țara (Ajustăm dinamic în funcție de limbă, dar setăm România ca implicit)
-    tari_disponibile = ["România", "Germania"] if limba in ["RO", "DE"] else ["România"]
+    tari_disponibile = ["România"] if limba in ["RO"] else ["România"]
     tara = st.sidebar.selectbox("Țară", tari_disponibile)
     
     # 3. Regiunea
