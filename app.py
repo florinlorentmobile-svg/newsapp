@@ -90,9 +90,14 @@ def arata_ecran_principal(tara, regiune, categorie, keyword):
 def arata_ecran_articol(marime_font):
     link = st.session_state.vizualizare_articol
     
-    # CSS local aplicat doar pe acest ecran pentru a face butonul mic și plat (flat)
+    # CSS local aplicat doar pe acest ecran
     st.markdown("""
         <style>
+            /* Coborâm întregul container al butonului pentru a nu ieși din ecran sus */
+            div.stButton {
+                margin-top: 30px !important;
+            }
+            /* Aspectul plat (flat) și mic al butonului */
             div.stButton > button {
                 padding: 2px 10px !important;
                 font-size: 12px !important;
@@ -114,7 +119,7 @@ def arata_ecran_articol(marime_font):
         </style>
     """, unsafe_allow_html=True)
     
-    # Butonul de Întoarcere optimizat (mic și plat)
+    # Butonul de Întoarcere optimizat
     if st.button("⬅️ Înapoi"):
         st.session_state.vizualizare_articol = None
         st.rerun()
@@ -150,6 +155,5 @@ def arata_ecran_articol(marime_font):
     else:
         st.error("Nu am putut extrage textul automat din cauza securității site-ului sursă.")
         st.markdown(f"[**Deschide articolul în browser aici**]({link})")
-
 if __name__ == "__main__":
     main()
