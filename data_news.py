@@ -72,6 +72,8 @@ RSS_FEEDS = {
     }
 }
 
+@st.cache_data(ttl=600)
+
 def preia_stiri(tara, regiune, categorie, keyword=""):
     """
     Se conectează la sursele RSS pe baza filtrelor și returnează o listă de știri.
