@@ -19,7 +19,7 @@ def genereaza_sidebar():
     categorie = st.sidebar.selectbox("Categorie", categorii)
     
     # 5. Căutare Keyword
-    keyword = st.sidebar.text_input("🔍 Căutare cuvânt cheie", placeholder="ex. Kaufland")
+    keyword = st.sidebar.text_input("🔍 Căutare cuvânt cheie", placeholder="ex. Romania")
     
     # 6. Mărime font (optim pentru a citi ușor pe telefon)
     marime_font = st.sidebar.slider("Mărime Font (px)", min_value=12, max_value=24, value=15)
