@@ -1,3 +1,4 @@
+import streamlit as st
 import feedparser
 
 # Baza de date locală extinsă cu fluxuri RSS pentru România
