@@ -119,3 +119,6 @@ def arata_ecran_articol():
     </iframe>
     """
     st.markdown(iframe_html, unsafe_allow_html=True)
+
+if __name__ == "__main__":
+    main()
