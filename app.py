@@ -109,16 +109,34 @@ def arata_ecran_articol():
         st.session_state.vizualizare_articol = None
         st.rerun()
         
-    st.caption(f"Sursă: {link}")
+    st.markdown('<div class="separator"></div>', unsafe_allow_html=True)
     
-    # Folosim HTML pur pentru a forța Iframe-ul să ocupe 85% din înălțimea ecranului (85vh)
-    iframe_html = f"""
-    <iframe src="{link}" 
-            style="width: 100%; height: 85vh; border: none; border-radius: 10px;" 
-            sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
-    </iframe>
-    """
-    st.markdown(iframe_html, unsafe_allow_html=True)
+    # Extragem articolul cu un indicator vizual de încărcare
+    with st.spinner("Se extrage articolul curat..."):
+        date_articol = data_news.extrage_text_articol(link)
+    
+    # Dacă extragerea a reușit și avem text
+    if date_articol and date_articol['text']:
+        # Afișăm Titlul
+        st.markdown(f"### {date_articol['titlu']}")
+        
+        # Afișăm Imaginea (dacă există)
+        if date_articol['imagine']:
+            st.image(date_articol['imagine'], use_container_width=True)
+            
+        # Afișăm Textul curat (folosim white-space pre-wrap pentru a păstra paragrafele)
+        st.markdown(
+            f"<div style='font-size: {st.session_state.get('marime_font', 15)}px; line-height: 1.6; color: #333; white-space: pre-wrap;'>{date_articol['text']}</div>", 
+            unsafe_allow_html=True
+        )
+        
+        st.markdown('<div class="separator" style="margin-top: 20px;"></div>', unsafe_allow_html=True)
+        st.caption(f"[Vezi articolul original]({link})")
+        
+    else:
+        # Plan de rezervă dacă site-ul blochează complet descărcarea (securitate maximă)
+        st.error("Nu am putut extrage textul automat din cauza securității site-ului sursă.")
+        st.markdown(f"[**Deschide articolul în browser aici**]({link})")
 
 if __name__ == "__main__":
     main()
